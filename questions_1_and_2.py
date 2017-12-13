@@ -110,7 +110,14 @@ def checkMean(mean, iterations=10000):
 
 
 def readExperimentParameters(filename):
-    """
+    """Reads a CSV file and returns the contents of said CSV file, normalised
+    into minutes.
+
+    Args:
+        filename (str): The name of the parameter containing file
+    Returns:
+        list: A list of tuples of each row of the CSV, normalised into minutes
+
     >>> readExperimentParameters('experiments.csv')[0]
     (10, 2, 480)
     >>> len(readExperimentParameters('experiments.csv'))
@@ -124,7 +131,12 @@ def readExperimentParameters(filename):
     """
     with open(filename, newline='') as file:
         data = list(csv.reader(file, delimiter=',', skipinitialspace=True))
+        """list: A list containing each row of the CSV file.
+        """
         output = []
+        """list: An empty list used to collect data from each row and then to
+        be used as an output.
+        """
         for row in data[1:]:
             if row[3] == 'h':
                 output.append((int(row[0]), int(row[1]), int(row[2]) * 60))
