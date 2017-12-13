@@ -1,4 +1,4 @@
-from functions import theoreticalMeanQueueLength, singleQueue
+from questions_1_and_2 import theoreticalMeanQueueLength, singleQueue
 import numpy as np
 import matplotlib as mpl
 mpl.use('pgf')
@@ -24,6 +24,7 @@ pgf_with_latex = {                      # setup matplotlib to use latex for outp
     "legend.fontsize": 8/2,               # Make the legend/label fonts a little smaller
     "xtick.labelsize": 8/2,
     "ytick.labelsize": 8/2,
+    "lines.linewidth": 0.6,
     "figure.figsize": figsize(0.9),     # default fig size of 0.9 textwidth
     "pgf.preamble": [
         r"\usepackage[utf8x]{inputenc}",    # use utf8 fonts becasue your computer can handle it :)
@@ -56,8 +57,7 @@ for i in beta:
     y.append(theoreticalMeanQueueLength(1,i))
 
 ax.plot(beta, y)
-ax.plot(list(range(2)), [0,100])
-ax.set_xlabel(r'$\beta$')
+ax.set_xlabel(r'Mean time of customer interaction $(\beta$ minutes)')
 ax.set_ylabel('Mean Queue Length')
 
-savefig('theoretical')
+savefig('./figs/theoretical')

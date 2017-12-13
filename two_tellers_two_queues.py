@@ -60,13 +60,13 @@ def doubleQueue(alpha, beta, time=480):
                     ta = nextTime(alpha)
                     if Q1 != 0 and Q2 != 0:
                         break
-            elif ts1 < ta and ts1 < ts2:
+            elif ts1 < ta and ts1 < ts2: # ts1 block
                 ta -= ts1
                 ts2 -= ts1
                 c += ts1
                 Q1 -= 1
                 ts1 = nextTime(beta)
-                while True:
+                while Q1 == 0 or Q2 == 0:
                     c += ta
                     if Q1 > Q2:
                         Q2 += 1
@@ -75,15 +75,13 @@ def doubleQueue(alpha, beta, time=480):
                     if max(Q1, Q2) > maxQ:
                         maxQ = max(Q1, Q2)
                     ta = nextTime(alpha)
-                    if Q1 != 0 and Q2 != 0:
-                        break
-            else:
+            else: # ts2 block
                 ta -= ts2
                 ts1 -= ts2
                 c += ts2
                 Q2 -= 1
                 ts2 = nextTime(beta)
-                while True:
+                while Q1 == 0 or Q2 == 0:
                     c += ta
                     if Q1 > Q2:
                         Q2 += 1
@@ -92,8 +90,6 @@ def doubleQueue(alpha, beta, time=480):
                     if max(Q1, Q2) > maxQ:
                         maxQ = max(Q1, Q2)
                     ta = nextTime(alpha)
-                    if Q1 != 0 and Q2 != 0:
-                        break
         else:
             return maxQ
 
@@ -148,7 +144,7 @@ def savefig(filename):
 
 
 time = 60 * 8
-iterations = 1000
+iterations = 10000
 fig, ax  = newfig(1)
 
 beta = np.arange(0, 5, 0.1)
@@ -202,7 +198,7 @@ for i in betatheo:
 ax.plot(xs, ys, label="1 Teller")
 ax.plot(xs2, ys2, label="2 Tellers 2 Queues")
 ax.plot(xs3, ys3, label="2 Tellers 1 Queue")
-ax.set_xlabel(r'Mean time of customer interaction $(\beta)$')
+ax.set_xlabel(r'Mean time of customer interaction $(\beta$ minutes)')
 ax.set_ylabel('Mean Queue Length over ' + str(time) + ' minutes')
 plt.legend()
-savefig('two_tellers_two_queues')
+savefig('./figs/two_tellers_two_queues')
