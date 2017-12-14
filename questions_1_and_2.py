@@ -146,7 +146,16 @@ def readExperimentParameters(filename):
 
 
 def singleQueue(alpha, beta, time=480):
-    """
+    """Simulates a single queue and a single teller
+    This simulation works by calculating which event is going to occur next
+    and thne triggers that event.
+
+    Args:
+        alpha (float): The mean time between customers entering the bank
+        beta (float): The mean time the teller takes per customer
+
+    Returns:
+        int: The maximum queue length that occured
     >>> random.seed(57)
     >>> singleQueue(10, 3, 480)
     3
@@ -162,9 +171,25 @@ def singleQueue(alpha, beta, time=480):
     >>> type(singleQueue(10, 9, 280))
     <class 'int'>
     """
-    ta, ts, c, maxQ = 0, 0, 0, 0
+    ta = 0
+    """float: The time until the next arrival
+    """
+    ts = 0
+    """float: The time until the teller has finished interacting with the
+    customer
+    """
+    c = 0
+    """float: The current simulation time
+    """
+    maxQ = 0
+    """int: The maximum queue length that occurs
+    """
     Q = 1
+    """int: The current queue length
+    """
     simTime = time
+    """int: The total time that the simulation shall run for
+    """
     while True:
         if c < simTime:
             if ta < ts:
@@ -191,9 +216,15 @@ def singleQueue(alpha, beta, time=480):
         else:
             return maxQ
 
+
 if __name__ == "__main__":
     alpha = np.arange(1.1, 10.1, 0.01)
+    """ndarray: A range of values between 1.1 and 10 with step 0.01 that shall
+    be used as the alpha values
+    """
     y = []
+    """list:
+    """
     for i in alpha:
         y.append(theoreticalMeanQueueLength(i, 1))
     plt.gcf().subplots_adjust(bottom=0.15)
