@@ -144,7 +144,7 @@ def savefig(filename):
 
 
 time = 60 * 8
-iterations = 10000
+iterations = 10
 fig, ax  = newfig(1)
 
 beta = np.arange(0, 5, 0.1)
